@@ -6,19 +6,21 @@ import com.onsale.onsaleapi.employees.entities.Employee
 import com.onsale.onsaleapi.employees.mappers.CreateEmployeeRequestMapper
 import com.onsale.onsaleapi.employees.mappers.CreateEmployeeRequestMapperAdditionalParams
 import com.onsale.onsaleapi.employees.reporitories.IEmployeeRepository
+import com.onsale.onsaleapi.shared.services.IUUIDService
 import com.onsale.onsaleapi.shared.types.ID
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class EmployeeService(
         @Autowired private val employeeRepository: IEmployeeRepository,
-        @Autowired private val createEmployeeRequestMapper: CreateEmployeeRequestMapper
+        @Autowired private val createEmployeeRequestMapper: CreateEmployeeRequestMapper,
+        @Autowired private val uuidService: IUUIDService
         ): IEmployeeService {
     override fun create(request: CreateEmployeeRequest): Employee {
-        // TODO: generate uuid
-        val id = "temp-id-${request.firstName}-${request.lastName}"
-        val additionalMapperParams = CreateEmployeeRequestMapperAdditionalParams(id)
+        val uuid = uuidService.getUUID()
+        val additionalMapperParams = CreateEmployeeRequestMapperAdditionalParams(uuid)
 
         return employeeRepository.create(createEmployeeRequestMapper.transform(request, additionalMapperParams))
     }

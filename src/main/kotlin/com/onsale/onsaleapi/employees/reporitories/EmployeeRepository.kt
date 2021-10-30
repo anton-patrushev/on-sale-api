@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository
 @Repository
 class EmployeeRepository: IEmployeeRepository {
     override fun create(employee: Employee): Employee {
-        TODO("Not yet implemented")
+        // TODO: implement real saving
+        return employee;
     }
 
     override fun getAll(): Array<Employee> {

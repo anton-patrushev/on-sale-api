@@ -38,7 +38,7 @@ class EmployeeService(
     }
 
     override fun deleteById(id: ID) {
-        TODO("Not yet implemented")
+        employeeRepository.deleteById(id)
     }
 
 }

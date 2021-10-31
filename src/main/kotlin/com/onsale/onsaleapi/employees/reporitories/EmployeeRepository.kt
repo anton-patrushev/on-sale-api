@@ -4,6 +4,7 @@ import com.onsale.onsaleapi.employees.db.EmployeesTable
 import com.onsale.onsaleapi.employees.entities.Employee
 import com.onsale.onsaleapi.employees.entities.fromDBRow
 import com.onsale.onsaleapi.shared.types.ID
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -46,6 +47,8 @@ class EmployeeRepository : IEmployeeRepository {
     }
 
     override fun deleteById(id: ID) {
-        TODO("Not yet implemented")
+        transaction {
+            EmployeesTable.deleteWhere { EmployeesTable.id eq UUID.fromString(id) }
+        }
     }
 }

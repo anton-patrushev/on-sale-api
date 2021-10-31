@@ -3,9 +3,11 @@ package com.onsale.onsaleapi.employees.controllers
 import com.onsale.onsaleapi.employees.controllers.EmployeeController.Companion.BASE_EMPLOYEE_URL
 import com.onsale.onsaleapi.employees.dto.CreateEmployeeRequest
 import com.onsale.onsaleapi.employees.dto.CreateEmployeeResponse
+import com.onsale.onsaleapi.employees.dto.DeleteEmployeeByIdResponse
 import com.onsale.onsaleapi.employees.dto.GetEmployeeByIdResponse
 import com.onsale.onsaleapi.employees.entities.Employee
 import com.onsale.onsaleapi.employees.mappers.CreateEmployeeResponseMapper
+import com.onsale.onsaleapi.employees.mappers.DeleteEmployeeByIdResponseMapper
 import com.onsale.onsaleapi.employees.mappers.GetEmployeeByIdResponseMapper
 import com.onsale.onsaleapi.employees.services.IEmployeeService
 import com.onsale.onsaleapi.shared.types.ID
@@ -19,7 +21,8 @@ import java.net.URI
 class EmployeeController(
         @Autowired private val employeeService: IEmployeeService,
         @Autowired private val createEmployeeResponseMapper: CreateEmployeeResponseMapper,
-        @Autowired private val getEmployeeByIdResponseMapper: GetEmployeeByIdResponseMapper
+        @Autowired private val getEmployeeByIdResponseMapper: GetEmployeeByIdResponseMapper,
+        @Autowired private val deleteEmployeeByIdResponseMapper: DeleteEmployeeByIdResponseMapper
         ): IEmployeeController {
 
     @PostMapping
@@ -39,6 +42,18 @@ class EmployeeController(
             is Employee -> ResponseEntity
                     .accepted()
                     .body(getEmployeeByIdResponseMapper.transform(employee))
+            else -> ResponseEntity.notFound().build()
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    override fun deleteEmployeeById(@PathVariable id: ID): ResponseEntity<DeleteEmployeeByIdResponse> {
+        val employee = employeeService.getById(id)
+
+        employeeService.deleteById(id)
+
+        return when (employee) {
+            is Employee -> ResponseEntity.ok(deleteEmployeeByIdResponseMapper.transform(employee))
             else -> ResponseEntity.notFound().build()
         }
     }

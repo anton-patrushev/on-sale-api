@@ -11,6 +11,6 @@ data class CreateEmployeeRequestMapperAdditionalParams(val id: ID)
 @Component
 class CreateEmployeeRequestMapper: IMapperWithAdditionalParams<CreateEmployeeRequest, Employee, CreateEmployeeRequestMapperAdditionalParams> {
     override fun transform(source: CreateEmployeeRequest, additionalParams: CreateEmployeeRequestMapperAdditionalParams): Employee {
-        return Employee(additionalParams.id, source.firstName, source.lastName)
+        return Employee(additionalParams.id, source.first_name, source.last_name)
     }
 }

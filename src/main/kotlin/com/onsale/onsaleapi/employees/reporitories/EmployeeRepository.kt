@@ -1,13 +1,27 @@
 package com.onsale.onsaleapi.employees.reporitories
 
+import com.onsale.onsaleapi.employees.db.EmployeesTable
 import com.onsale.onsaleapi.employees.entities.Employee
+import com.onsale.onsaleapi.employees.entities.fromDBRow
 import com.onsale.onsaleapi.shared.types.ID
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
+import java.util.UUID
 
 @Repository
-class EmployeeRepository: IEmployeeRepository {
+class EmployeeRepository : IEmployeeRepository {
     override fun create(employee: Employee): Employee {
-        // TODO: implement real saving
+
+        transaction {
+            EmployeesTable.insert {
+                it[id] = UUID.fromString(employee.id)
+                it[firstName] = employee.firstName
+                it[lastName] = employee.lastName
+            }
+        }
+
         return employee;
     }
 
@@ -16,7 +30,11 @@ class EmployeeRepository: IEmployeeRepository {
     }
 
     override fun getById(id: ID): Employee? {
-        TODO("Not yet implemented")
+        val employee = transaction {
+            EmployeesTable.select { EmployeesTable.id eq UUID.fromString(id) }.map(Employee::fromDBRow)[0]
+        }
+
+        return employee
     }
 
     override fun update(id: ID): Employee {

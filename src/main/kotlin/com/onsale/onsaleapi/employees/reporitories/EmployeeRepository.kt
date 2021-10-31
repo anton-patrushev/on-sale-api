@@ -32,7 +32,7 @@ class EmployeeRepository : IEmployeeRepository {
 
     override fun getById(id: ID): Employee? {
         val employee = transaction {
-            EmployeesTable.select { EmployeesTable.id eq UUID.fromString(id) }.map(Employee::fromDBRow)[0]
+            EmployeesTable.select { EmployeesTable.id eq UUID.fromString(id) }.map(Employee::fromDBRow).getOrNull(0)
         }
 
         return employee

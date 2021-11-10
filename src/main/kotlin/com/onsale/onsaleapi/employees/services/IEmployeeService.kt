@@ -10,7 +10,7 @@ interface IEmployeeService {
     fun edit(request: UpdateEmployeeRequest): Employee
 
     fun getById(id: ID): Employee?
-    fun getAll(id: ID): Array<Employee>
+    fun getAll(): List<Employee>
 
     fun deleteById(id: ID)
 

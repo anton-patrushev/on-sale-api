@@ -7,6 +7,7 @@ import com.onsale.onsaleapi.shared.types.ID
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
 import java.util.UUID
@@ -26,8 +27,10 @@ class EmployeeRepository : IEmployeeRepository {
         return employee;
     }
 
-    override fun getAll(): Array<Employee> {
-        TODO("Not yet implemented")
+    override fun getAll(): List<Employee> {
+        return transaction {
+            EmployeesTable.selectAll().map(Employee::fromDBRow)
+        }
     }
 
     override fun getById(id: ID): Employee? {

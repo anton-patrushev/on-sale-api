@@ -5,9 +5,11 @@ import com.onsale.onsaleapi.employees.dto.CreateEmployeeRequest
 import com.onsale.onsaleapi.employees.dto.CreateEmployeeResponse
 import com.onsale.onsaleapi.employees.dto.DeleteEmployeeByIdResponse
 import com.onsale.onsaleapi.employees.dto.GetEmployeeByIdResponse
+import com.onsale.onsaleapi.employees.dto.GetAllEmployeesResponse
 import com.onsale.onsaleapi.employees.entities.Employee
 import com.onsale.onsaleapi.employees.mappers.CreateEmployeeResponseMapper
 import com.onsale.onsaleapi.employees.mappers.DeleteEmployeeByIdResponseMapper
+import com.onsale.onsaleapi.employees.mappers.GetAllEmployeesResponseMapper
 import com.onsale.onsaleapi.employees.mappers.GetEmployeeByIdResponseMapper
 import com.onsale.onsaleapi.employees.services.IEmployeeService
 import com.onsale.onsaleapi.shared.types.ID
@@ -22,6 +24,7 @@ class EmployeeController(
         @Autowired private val employeeService: IEmployeeService,
         @Autowired private val createEmployeeResponseMapper: CreateEmployeeResponseMapper,
         @Autowired private val getEmployeeByIdResponseMapper: GetEmployeeByIdResponseMapper,
+        @Autowired private val getAllEmployeesResponseMapper: GetAllEmployeesResponseMapper,
         @Autowired private val deleteEmployeeByIdResponseMapper: DeleteEmployeeByIdResponseMapper
         ): IEmployeeController {
 
@@ -44,6 +47,15 @@ class EmployeeController(
                     .body(getEmployeeByIdResponseMapper.transform(employee))
             else -> ResponseEntity.notFound().build()
         }
+    }
+
+    @GetMapping
+    override fun getAllEmployees(): ResponseEntity<GetAllEmployeesResponse> {
+        val employees = employeeService.getAll()
+
+        return ResponseEntity
+                .accepted()
+                .body(getAllEmployeesResponseMapper.transform(employees))
     }
 
     @DeleteMapping("/{id}")

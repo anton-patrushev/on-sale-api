@@ -33,8 +33,8 @@ class EmployeeService(
         return employeeRepository.getById(id)
     }
 
-    override fun getAll(id: ID): Array<Employee> {
-        TODO("Not yet implemented")
+    override fun getAll(): List<Employee> {
+        return employeeRepository.getAll()
     }
 
     override fun deleteById(id: ID) {

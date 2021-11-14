@@ -1,5 +1,3 @@
 package com.onsale.onsaleapi.employees.dto
 
-import com.onsale.onsaleapi.shared.types.ID
-
-data class UpdateEmployeeRequest(val id: ID, val firstName: String?, val lastName: String?)
+data class UpdateEmployeeRequest(val first_name: String?, val last_name: String?)

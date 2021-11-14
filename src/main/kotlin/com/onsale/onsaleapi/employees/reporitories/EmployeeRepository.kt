@@ -2,12 +2,10 @@ package com.onsale.onsaleapi.employees.reporitories
 
 import com.onsale.onsaleapi.employees.db.EmployeesTable
 import com.onsale.onsaleapi.employees.entities.Employee
+import com.onsale.onsaleapi.employees.entities.EmployeeFields
 import com.onsale.onsaleapi.employees.entities.fromDBRow
 import com.onsale.onsaleapi.shared.types.ID
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
 import java.util.UUID
@@ -41,8 +39,15 @@ class EmployeeRepository : IEmployeeRepository {
         return employee
     }
 
-    override fun update(id: ID): Employee {
-        TODO("Not yet implemented")
+    override fun update(id: ID, fieldsToUpdate: EmployeeFields): Employee {
+        transaction {
+            EmployeesTable.update({ EmployeesTable.id eq UUID.fromString(id) }) {
+                if (fieldsToUpdate.firstName != null) it[firstName] = fieldsToUpdate.firstName
+                if (fieldsToUpdate.lastName != null) it[lastName] = fieldsToUpdate.lastName
+            }
+        }
+
+        return getById(id) as Employee
     }
 
     override fun deleteAll() {

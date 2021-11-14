@@ -8,6 +8,8 @@ data class Employee(val id: ID, val firstName: String, val lastName: String) {
     companion object {}
 }
 
+data class EmployeeFields(val firstName: String?, val lastName: String?)
+
 // TODO: move into better place
 fun Employee.Companion.fromDBRow(row: ResultRow): Employee {
     return Employee(

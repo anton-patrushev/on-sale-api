@@ -7,7 +7,7 @@ import com.onsale.onsaleapi.shared.types.ID
 
 interface IEmployeeService {
     fun create(request: CreateEmployeeRequest): Employee
-    fun edit(request: UpdateEmployeeRequest): Employee
+    fun edit(id: ID, request: UpdateEmployeeRequest): Employee
 
     fun getById(id: ID): Employee?
     fun getAll(): List<Employee>

@@ -1,16 +1,9 @@
 package com.onsale.onsaleapi.employees.controllers
 
 import com.onsale.onsaleapi.employees.controllers.EmployeeController.Companion.BASE_EMPLOYEE_URL
-import com.onsale.onsaleapi.employees.dto.CreateEmployeeRequest
-import com.onsale.onsaleapi.employees.dto.CreateEmployeeResponse
-import com.onsale.onsaleapi.employees.dto.DeleteEmployeeByIdResponse
-import com.onsale.onsaleapi.employees.dto.GetEmployeeByIdResponse
-import com.onsale.onsaleapi.employees.dto.GetAllEmployeesResponse
+import com.onsale.onsaleapi.employees.dto.*
 import com.onsale.onsaleapi.employees.entities.Employee
-import com.onsale.onsaleapi.employees.mappers.CreateEmployeeResponseMapper
-import com.onsale.onsaleapi.employees.mappers.DeleteEmployeeByIdResponseMapper
-import com.onsale.onsaleapi.employees.mappers.GetAllEmployeesResponseMapper
-import com.onsale.onsaleapi.employees.mappers.GetEmployeeByIdResponseMapper
+import com.onsale.onsaleapi.employees.mappers.*
 import com.onsale.onsaleapi.employees.services.IEmployeeService
 import com.onsale.onsaleapi.shared.types.ID
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,6 +16,7 @@ import java.net.URI
 class EmployeeController(
         @Autowired private val employeeService: IEmployeeService,
         @Autowired private val createEmployeeResponseMapper: CreateEmployeeResponseMapper,
+        @Autowired private val updateEmployeeResponseMapper: UpdateEmployeeResponseMapper,
         @Autowired private val getEmployeeByIdResponseMapper: GetEmployeeByIdResponseMapper,
         @Autowired private val getAllEmployeesResponseMapper: GetAllEmployeesResponseMapper,
         @Autowired private val deleteEmployeeByIdResponseMapper: DeleteEmployeeByIdResponseMapper
@@ -68,6 +62,13 @@ class EmployeeController(
             is Employee -> ResponseEntity.ok(deleteEmployeeByIdResponseMapper.transform(employee))
             else -> ResponseEntity.notFound().build()
         }
+    }
+
+    @PatchMapping("/{id}")
+    override fun updateEmployeeById(@PathVariable id: ID, @RequestBody request: UpdateEmployeeRequest): ResponseEntity<UpdateEmployeeResponse> {
+        val employee = employeeService.edit(id, request)
+
+        return ResponseEntity.ok(updateEmployeeResponseMapper.transform(employee))
     }
 
     companion object {

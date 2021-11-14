@@ -12,6 +12,6 @@ interface IEmployeeService {
     fun getById(id: ID): Employee?
     fun getAll(): List<Employee>
 
-    fun deleteById(id: ID)
+    fun deleteById(id: ID): Employee?
 
 }

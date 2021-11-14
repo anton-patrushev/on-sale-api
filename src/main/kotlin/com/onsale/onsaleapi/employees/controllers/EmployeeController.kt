@@ -54,9 +54,7 @@ class EmployeeController(
 
     @DeleteMapping("/{id}")
     override fun deleteEmployeeById(@PathVariable id: ID): ResponseEntity<DeleteEmployeeByIdResponse> {
-        val employee = employeeService.getById(id)
-
-        employeeService.deleteById(id)
+        val employee = employeeService.deleteById(id)
 
         return when (employee) {
             is Employee -> ResponseEntity.ok(deleteEmployeeByIdResponseMapper.transform(employee))

@@ -40,8 +40,11 @@ class EmployeeService(
         return employeeRepository.getAll()
     }
 
-    override fun deleteById(id: ID) {
+    override fun deleteById(id: ID): Employee? {
+        val employee = employeeRepository.getById(id)
         employeeRepository.deleteById(id)
+
+        return employee
     }
 
 }

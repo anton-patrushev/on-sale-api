@@ -66,7 +66,10 @@ class EmployeeController(
     override fun updateEmployeeById(@PathVariable id: ID, @RequestBody request: UpdateEmployeeRequest): ResponseEntity<UpdateEmployeeResponse> {
         val employee = employeeService.edit(id, request)
 
-        return ResponseEntity.ok(updateEmployeeResponseMapper.transform(employee))
+        return when (employee) {
+            is Employee -> ResponseEntity.ok(updateEmployeeResponseMapper.transform(employee))
+            else -> ResponseEntity.notFound().build()
+        }
     }
 
     companion object {

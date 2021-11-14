@@ -10,7 +10,7 @@ interface IEmployeeRepository {
     fun getAll(): List<Employee>
     fun getById(id: ID): Employee?
 
-    fun update(id: ID, fieldsToUpdate: EmployeeFields): Employee
+    fun update(id: ID, fieldsToUpdate: EmployeeFields): Employee?
 
     fun deleteAll()
     fun deleteById(id: ID)

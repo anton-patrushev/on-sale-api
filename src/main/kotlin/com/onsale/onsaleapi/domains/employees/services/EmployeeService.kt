@@ -26,7 +26,7 @@ class EmployeeService(
         return employeeRepository.create(createEmployeeRequestMapper.transform(request, additionalMapperParams))
     }
 
-    override fun edit(id:ID, request: UpdateEmployeeRequest): Employee {
+    override fun edit(id:ID, request: UpdateEmployeeRequest): Employee? {
         val employeeFieldsToUpdate = updateEmployeeRequestMapper.transform(request)
 
         return employeeRepository.update(id, employeeFieldsToUpdate)

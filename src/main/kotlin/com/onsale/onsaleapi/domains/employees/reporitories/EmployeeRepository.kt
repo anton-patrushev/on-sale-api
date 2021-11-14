@@ -39,7 +39,7 @@ class EmployeeRepository : IEmployeeRepository {
         return employee
     }
 
-    override fun update(id: ID, fieldsToUpdate: EmployeeFields): Employee {
+    override fun update(id: ID, fieldsToUpdate: EmployeeFields): Employee? {
         transaction {
             EmployeesTable.update({ EmployeesTable.id eq UUID.fromString(id) }) {
                 if (fieldsToUpdate.firstName != null) it[firstName] = fieldsToUpdate.firstName
@@ -47,7 +47,7 @@ class EmployeeRepository : IEmployeeRepository {
             }
         }
 
-        return getById(id) as Employee
+        return getById(id) as Employee?
     }
 
     override fun deleteAll() {

@@ -27,7 +27,7 @@ data class CompanyFields(
 fun Company.Companion.fromDBRow(row: ResultRow): Company {
     return Company(
             row[CompaniesTable.id].toString(),
-            row[CompaniesTable.name].toString(),
+            row[CompaniesTable.name],
             row[CompaniesTable.websiteURL].toString(),
             row[CompaniesTable.email].toString(),
             row[CompaniesTable.phone].toString(),

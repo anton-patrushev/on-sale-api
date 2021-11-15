@@ -12,56 +12,54 @@ import java.util.UUID
 
 @Repository
 class CompanyRepository : ICompanyRepository {
-    override fun create(employee: Company): Company {
-        TODO("Not yet implemented")
-//
-//        transaction {
-//            CompaniesTable.insert {
-//                it[id] = UUID.fromString(employee.id)
-//                it[firstName] = employee.firstName
-//                it[lastName] = employee.lastName
-//            }
-//        }
-//
-//        return employee;
+    override fun create(company: Company) {
+        transaction {
+            CompaniesTable.insert {
+                it[id] = UUID.fromString(company.id)
+                it[name] = company.name
+                it[websiteURL] = company.websiteURL
+                it[email] = company.email
+                it[phone] = company.phone
+                it[workSchedule] = company.workSchedule
+            }
+        }
     }
 
     override fun getAll(): List<Company> {
-        TODO("Not yet implemented")
-//        return transaction {
-//            CompaniesTable.selectAll().map(Company::fromDBRow)
-//        }
+        return transaction {
+            CompaniesTable.selectAll().map(Company::fromDBRow)
+        }
     }
 
     override fun getById(id: ID): Company? {
-        TODO("Not yet implemented")
-//        val employee = transaction {
-//            CompaniesTable.select { CompaniesTable.id eq UUID.fromString(id) }.map(Company::fromDBRow).getOrNull(0)
-//        }
-//
-//        return employee
+        val company = transaction {
+            CompaniesTable.select { CompaniesTable.id eq UUID.fromString(id) }.map(Company::fromDBRow).getOrNull(0)
+        }
+
+        return company
     }
 
-    override fun update(id: ID, fieldsToUpdate: CompanyFields): Company? {
-        TODO("Not yet implemented")
-//        transaction {
-//            CompaniesTable.update({ CompaniesTable.id eq UUID.fromString(id) }) {
-//                if (fieldsToUpdate.firstName != null) it[firstName] = fieldsToUpdate.firstName
-//                if (fieldsToUpdate.lastName != null) it[lastName] = fieldsToUpdate.lastName
-//            }
-//        }
-//
-//        return getById(id) as Company?
+    override fun update(id: ID, fieldsToUpdate: CompanyFields) {
+        transaction {
+            CompaniesTable.update({ CompaniesTable.id eq UUID.fromString(id) }) {
+                if (fieldsToUpdate.name != null) it[name] = fieldsToUpdate.name
+                if (fieldsToUpdate.websiteURL != null) it[websiteURL] = fieldsToUpdate.websiteURL
+                if (fieldsToUpdate.email != null) it[email] = fieldsToUpdate.email
+                if (fieldsToUpdate.phone != null) it[phone] = fieldsToUpdate.phone
+                if (fieldsToUpdate.workSchedule != null) it[workSchedule] = fieldsToUpdate.workSchedule
+            }
+        }
     }
 
     override fun deleteAll() {
-        TODO("Not yet implemented")
+        transaction {
+            CompaniesTable.deleteAll()
+        }
     }
 
     override fun deleteById(id: ID) {
-        TODO("Not yet implemented")
-//        transaction {
-//            CompaniesTable.deleteWhere { CompaniesTable.id eq UUID.fromString(id) }
-//        }
+        transaction {
+            CompaniesTable.deleteWhere { CompaniesTable.id eq UUID.fromString(id) }
+        }
     }
 }

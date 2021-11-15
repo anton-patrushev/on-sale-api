@@ -20,36 +20,35 @@ class CompanyService(
         @Autowired private val uuidService: IUUIDService
         ): ICompanyService {
     override fun create(request: CreateCompanyRequest): Company {
-        TODO("Not yet implemented")
-//        val uuid = uuidService.getUUID()
-//        val additionalMapperParams = CreateCompanyRequestMapperAdditionalParams(uuid)
-//
-//        return companyRepository.create(createCompanyRequestMapper.transform(request, additionalMapperParams))
+        val uuid = uuidService.getUUID()
+        val additionalMapperParams = CreateCompanyRequestMapperAdditionalParams(uuid)
+
+        companyRepository.create(createCompanyRequestMapper.transform(request, additionalMapperParams))
+
+        return companyRepository.getById(uuid) as Company
     }
 
     override fun edit(id:ID, request: UpdateCompanyRequest): Company? {
-        TODO("Not yet implemented")
-//        val companyFieldsToUpdate = updateCompanyRequestMapper.transform(request)
-//
-//        return companyRepository.update(id, companyFieldsToUpdate)
+        val companyFieldsToUpdate = updateCompanyRequestMapper.transform(request)
+
+        companyRepository.update(id, companyFieldsToUpdate)
+
+        return companyRepository.getById(id) as Company
     }
 
     override fun getById(id: ID): Company? {
-        TODO("Not yet implemented")
-//        return companyRepository.getById(id)
+        return companyRepository.getById(id)
     }
 
     override fun getAll(): List<Company> {
-        TODO("Not yet implemented")
-//        return companyRepository.getAll()
+        return companyRepository.getAll()
     }
 
     override fun deleteById(id: ID): Company? {
-        TODO("Not yet implemented")
-//        val company = companyRepository.getById(id)
-//        companyRepository.deleteById(id)
-//
-//        return company
+        val company = companyRepository.getById(id)
+        companyRepository.deleteById(id)
+
+        return company
     }
 
 }

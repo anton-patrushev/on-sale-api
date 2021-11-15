@@ -1,0 +1,6 @@
+INSERT INTO Companies (id, name, website_url, email, phone, work_schedule) VALUES ('a5eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Tesla', 'https://www.tesla.com/', NULL, NULL, '24/7');
+INSERT INTO Companies (id, name, website_url, email, phone, work_schedule) VALUES ('a5eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', 'Nike', 'https://www.nike.com/', NULL, NULL, '24/7');
+INSERT INTO Companies (id, name, website_url, email, phone, work_schedule) VALUES ('a5eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', 'Adidas', 'https://www.adidas.com/', NULL, NULL, '24/7');
+INSERT INTO Companies (id, name, website_url, email, phone, work_schedule) VALUES ('a5eebc99-9c0b-4ef8-bb6d-6bb9bd380a14', 'New Balance', 'https://www.newbalance.com/', NULL, NULL, '24/7');
+INSERT INTO Companies (id, name, website_url, email, phone, work_schedule) VALUES ('a5eebc99-9c0b-4ef8-bb6d-6bb9bd380a15', 'Medium', 'https://www.medium.com/', NULL, NULL, NULL);
+INSERT INTO Companies (id, name, website_url, email, phone, work_schedule) VALUES ('a5eebc99-9c0b-4ef8-bb6d-6bb9bd380a16', 'KFC', 'https://www.kfc.by/', NULL, NULL, '24/7');

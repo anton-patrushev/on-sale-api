@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 
+@RestController
 @RequestMapping(value = [BASE_CITY_URL])
 class CityController(
         @Autowired val cityService: CityService,

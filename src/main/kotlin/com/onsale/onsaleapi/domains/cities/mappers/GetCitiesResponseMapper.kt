@@ -4,7 +4,9 @@ import com.onsale.onsaleapi.domains.cities.dto.GetCitiesResponse
 import com.onsale.onsaleapi.domains.cities.dto.GetCitiesResponseRow
 import com.onsale.onsaleapi.domains.cities.entities.City
 import com.onsale.onsaleapi.domains.shared.types.IMapper
+import org.springframework.stereotype.Component
 
+@Component
 class GetCitiesResponseMapper : IMapper<List<City>, GetCitiesResponse> {
     override fun transform(source: List<City>): GetCitiesResponse {
         return GetCitiesResponse(source.map {

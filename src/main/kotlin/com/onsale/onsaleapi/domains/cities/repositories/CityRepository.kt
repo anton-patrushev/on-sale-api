@@ -1,33 +1,59 @@
 package com.onsale.onsaleapi.domains.cities.repositories
 
+import com.onsale.onsaleapi.domains.cities.db.CitiesTable
 import com.onsale.onsaleapi.domains.cities.entities.City
 import com.onsale.onsaleapi.domains.cities.entities.CityFields
+import com.onsale.onsaleapi.domains.cities.entities.fromDBRow
 import com.onsale.onsaleapi.domains.shared.types.ID
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
+import java.util.UUID
 
 @Repository
 class CityRepository : ICityRepository {
     override fun create(city: City) {
-        TODO("Not yet implemented")
+        transaction {
+            CitiesTable.insert {
+                it[id] = UUID.fromString(city.id)
+                it[name] = city.name
+            }
+        }
     }
 
     override fun getAll(): List<City> {
-        TODO("Not yet implemented")
+        val cities = transaction {
+            CitiesTable.selectAll()
+        }
+
+        return cities.map(City.Companion::fromDBRow)
     }
 
     override fun getById(id: ID): City? {
-        TODO("Not yet implemented")
+        val query = transaction {
+            CitiesTable.select { CitiesTable.id eq UUID.fromString(id) }
+        }
+
+        return query.map(City.Companion::fromDBRow).getOrNull(0)
     }
 
     override fun update(id: ID, fieldsToUpdate: CityFields) {
-        TODO("Not yet implemented")
+        transaction {
+            CitiesTable.update({ CitiesTable.id eq UUID.fromString(id) }) {
+                if (fieldsToUpdate.name != null) it[name] = fieldsToUpdate.name
+            }
+        }
     }
 
     override fun deleteAll() {
-        TODO("Not yet implemented")
+        transaction {
+            CitiesTable.deleteAll()
+        }
     }
 
     override fun deleteById(id: ID) {
-        TODO("Not yet implemented")
+        transaction {
+            CitiesTable.deleteWhere { CitiesTable.id eq UUID.fromString(id) }
+        }
     }
 }

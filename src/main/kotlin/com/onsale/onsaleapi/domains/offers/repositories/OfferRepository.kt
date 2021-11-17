@@ -21,17 +21,11 @@ class OfferRepository : IOfferRepository {
     }
 
     override fun getById(id: ID): Offer? {
-        println("~~~${UUID.fromString(id)}")
-
         val query = transaction {
             OffersTable.select { OffersTable.id eq UUID.fromString(id) }.firstOrNull()
         } ?: return null
 
         return query.let(Offer.Companion::fromDBRow)
-
-//        return query.map(Offer.Companion::fromDBRow).getOrNull(0)
-
-//        return null
     }
 
     override fun getAll(): List<Offer> {

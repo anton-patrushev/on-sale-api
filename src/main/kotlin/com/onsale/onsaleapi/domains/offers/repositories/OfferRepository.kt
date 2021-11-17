@@ -30,7 +30,7 @@ class OfferRepository : IOfferRepository {
 
     override fun update(id: ID, fieldsToUpdate: OfferFields) {
         transaction {
-            OffersTable.update {
+            OffersTable.update({ OffersTable.id eq UUID.fromString(id) }) {
                 if (fieldsToUpdate.description != null) it[description] = fieldsToUpdate.description
                 if (fieldsToUpdate.sale != null) it[sale] = fieldsToUpdate.sale
                 if (fieldsToUpdate.cityId != null) it[cityId] = UUID.fromString(fieldsToUpdate.cityId)

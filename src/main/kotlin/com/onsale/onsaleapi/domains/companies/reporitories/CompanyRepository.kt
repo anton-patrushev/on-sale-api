@@ -33,10 +33,10 @@ class CompanyRepository : ICompanyRepository {
 
     override fun getById(id: ID): Company? {
         val company = transaction {
-            CompaniesTable.select { CompaniesTable.id eq UUID.fromString(id) }.map(Company::fromDBRow).getOrNull(0)
-        }
+            CompaniesTable.select { CompaniesTable.id eq UUID.fromString(id) }.firstOrNull()
+        } ?: return null
 
-        return company
+        return company.let(Company.Companion::fromDBRow)
     }
 
     override fun update(id: ID, fieldsToUpdate: CompanyFields) {

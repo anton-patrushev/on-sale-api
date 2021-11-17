@@ -31,10 +31,10 @@ class CityRepository : ICityRepository {
 
     override fun getById(id: ID): City? {
         val query = transaction {
-            CitiesTable.select { CitiesTable.id eq UUID.fromString(id) }
-        }
+            CitiesTable.select { CitiesTable.id eq UUID.fromString(id) }.firstOrNull()
+        } ?: return null
 
-        return query.map(City.Companion::fromDBRow).getOrNull(0)
+        return query.let(City.Companion::fromDBRow)
     }
 
     override fun update(id: ID, fieldsToUpdate: CityFields) {

@@ -7,7 +7,9 @@ import com.onsale.onsaleapi.domains.offers.dto.common.CommonCompanyInfo
 import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.offers.mappers.common.OfferResponseMapperAdditionalParams
 import com.onsale.onsaleapi.domains.shared.types.IMapperWithAdditionalParams
+import org.springframework.stereotype.Component
 
+@Component
 class GetOffersResponseMapper : IMapperWithAdditionalParams<List<Offer>, GetOffersResponse, List<OfferResponseMapperAdditionalParams>> {
     override fun transform(source: List<Offer>, additionalParams: List<OfferResponseMapperAdditionalParams>): GetOffersResponse {
         val offersWithAdditionalParams = source.zip(additionalParams)

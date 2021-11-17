@@ -1,3 +1,8 @@
 package com.onsale.onsaleapi.domains.cities.dto
 
-data class UpdateCityRequest(val name: String?, val _unusedPropToFixSpringSerialization: Any?)
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class UpdateCityRequest(
+    @JsonProperty("name") // required for single field requests
+    val name: String?
+)

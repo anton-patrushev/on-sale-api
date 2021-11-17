@@ -23,7 +23,7 @@ class CityRepository : ICityRepository {
 
     override fun getAll(): List<City> {
         val cities = transaction {
-            CitiesTable.selectAll()
+            CitiesTable.selectAll().map { it }
         }
 
         return cities.map(City.Companion::fromDBRow)

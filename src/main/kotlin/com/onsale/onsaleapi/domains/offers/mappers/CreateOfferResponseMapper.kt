@@ -10,24 +10,25 @@ import com.onsale.onsaleapi.domains.shared.types.IMapperWithAdditionalParams
 import org.springframework.stereotype.Component
 
 @Component
-class CreateOfferResponseMapper : IMapperWithAdditionalParams<Offer, CreateOfferResponse, OfferResponseMapperAdditionalParams> {
+class CreateOfferResponseMapper :
+    IMapperWithAdditionalParams<Offer, CreateOfferResponse, OfferResponseMapperAdditionalParams> {
     override fun transform(source: Offer, additionalParams: OfferResponseMapperAdditionalParams): CreateOfferResponse {
         return CreateOfferResponse(
-                CreateOfferResponseData(
-                        source.id,
-                        CommonCompanyInfo(
-                                additionalParams.company.id,
-                                additionalParams.company.name,
-                                additionalParams.company.websiteURL,
-                                additionalParams.company.email,
-                                additionalParams.company.phone,
-                                additionalParams.company.workSchedule
-                        ),
-                        source.description,
-                        source.sale,
-                        CommonCityInfo(additionalParams.city.id, additionalParams.city.name),
-                        source.created_at
-                )
+            CreateOfferResponseData(
+                source.id,
+                CommonCompanyInfo(
+                    additionalParams.company.id,
+                    additionalParams.company.name,
+                    additionalParams.company.websiteURL,
+                    additionalParams.company.email,
+                    additionalParams.company.phone,
+                    additionalParams.company.workSchedule
+                ),
+                source.description,
+                source.sale,
+                CommonCityInfo(additionalParams.city.id, additionalParams.city.name),
+                source.createdAt.toString()
+            )
         )
     }
 

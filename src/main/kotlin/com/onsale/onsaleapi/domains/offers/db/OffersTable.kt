@@ -11,7 +11,7 @@ import java.util.*
 object OffersTable : Table("Offers") {
     val id: Column<UUID> = uuid("id").uniqueIndex()
     val companyId: Column<UUID> = reference("company_id", CompaniesTable.id)
-    val description: Column<String?> = varchar("description", 50).nullable()
+    val description: Column<String?> = varchar("description", 300).nullable()
     val sale: Column<String?> = varchar("sale", 50).nullable()
     val cityId: Column<UUID> = reference("city_id", CitiesTable.id)
     val createdAt: Column<LocalDate> = date("created_at") // TODO: Date type

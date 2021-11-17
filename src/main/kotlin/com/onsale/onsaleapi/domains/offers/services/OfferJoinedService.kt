@@ -12,39 +12,39 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class OfferService(
+class OfferJoinedService(
         @Autowired val offerRepository: IOfferRepository,
         @Autowired val createOfferRequestMapper: CreateOfferRequestMapper,
         @Autowired val updateOfferRequestMapper: UpdateOfferRequestMapper,
-) : IOfferService {
-    override fun create(request: CreateOfferRequest): Offer {
+) : IOfferJoinedService {
+    override fun create(request: CreateOfferRequest): OfferJoined {
         val offer = createOfferRequestMapper.transform(request)
 
         offerRepository.create(offer)
 
-        return offerRepository.getById(offer.id) as Offer
+        return offerRepository.getById(offer.id) as OfferJoined
     }
 
-    override fun edit(id: ID, request: UpdateOfferRequest): Offer? {
+    override fun edit(id: ID, request: UpdateOfferRequest): OfferJoined? {
         val offerFields = updateOfferRequestMapper.transform(request)
 
         offerRepository.update(id, offerFields)
 
-        return offerRepository.getById(id)
+        return offerRepository.getByIdJoined(id)
     }
 
-    override fun getById(id: ID): Offer? {
-        return offerRepository.getById(id)
+    override fun getById(id: ID): OfferJoined? {
+        return offerRepository.getByIdJoined(id)
     }
 
-    override fun getAll(): List<Offer> {
-        return offerRepository.getAll()
+    override fun getAll(): List<OfferJoined> {
+        return offerRepository.getAllJoined()
     }
 
-    override fun deleteById(id: ID): Offer? {
+    override fun deleteById(id: ID): OfferJoined? {
         offerRepository.deleteById(id)
 
-        return offerRepository.getById(id)
+        return offerRepository.getByIdJoined(id)
     }
 
 }

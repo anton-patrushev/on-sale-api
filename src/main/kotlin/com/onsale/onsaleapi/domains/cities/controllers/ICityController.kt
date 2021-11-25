@@ -5,7 +5,7 @@ import com.onsale.onsaleapi.domains.shared.types.ID
 import org.springframework.http.ResponseEntity
 
 interface ICityController {
-    fun createCity(request: CreateLikeRequest): ResponseEntity<CreateCityResponse>
+    fun createCity(request: CreateCityRequest): ResponseEntity<CreateCityResponse>
     fun getCityById(id: ID): ResponseEntity<GetCityByIdResponse>
     fun getCities(): ResponseEntity<GetCitiesResponse>
     fun deleteCityById(id: ID): ResponseEntity<DeleteCityByIdResponse>

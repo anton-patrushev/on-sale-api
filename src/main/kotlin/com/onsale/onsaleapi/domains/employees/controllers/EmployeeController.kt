@@ -20,7 +20,7 @@ class EmployeeController(
         @Autowired private val getEmployeeByIdResponseMapper: GetEmployeeByIdResponseMapper,
         @Autowired private val getAllEmployeesResponseMapper: GetAllEmployeesResponseMapper,
         @Autowired private val deleteEmployeeByIdResponseMapper: DeleteEmployeeByIdResponseMapper
-        ): IEmployeeController {
+) : IEmployeeController {
 
     @PostMapping
     override fun createEmployee(@RequestBody request: CreateEmployeeRequest): ResponseEntity<CreateEmployeeResponse> {

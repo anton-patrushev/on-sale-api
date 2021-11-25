@@ -1,6 +1,6 @@
 package com.onsale.onsaleapi.domains.cities.services
 
-import com.onsale.onsaleapi.domains.cities.dto.CreateLikeRequest
+import com.onsale.onsaleapi.domains.cities.dto.CreateCityRequest
 import com.onsale.onsaleapi.domains.cities.dto.UpdateCityRequest
 import com.onsale.onsaleapi.domains.cities.entities.City
 import com.onsale.onsaleapi.domains.cities.mappers.CreateCityRequestMapper
@@ -19,7 +19,7 @@ class CityService(
         @Autowired val createCityRequestMapper: CreateCityRequestMapper,
         @Autowired val updateCityRequestMapper: UpdateCityRequestMapper,
 ) : ICityService {
-    override fun create(request: CreateLikeRequest): City {
+    override fun create(request: CreateCityRequest): City {
         val id = uuidService.getUUID()
 
         val city = createCityRequestMapper.transform(request, CreateCompanyRequestMapperAdditionalParams(id))

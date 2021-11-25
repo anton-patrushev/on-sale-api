@@ -1,4 +1,4 @@
-package com.onsale.onsaleapi.domains.cities.controllers
+package com.onsale.onsaleapi.domains.likes.controllers
 
 import com.onsale.onsaleapi.domains.cities.dto.*
 import com.onsale.onsaleapi.domains.likes.dto.CreateLikeRequest

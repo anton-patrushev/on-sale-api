@@ -1,4 +1,4 @@
-package com.onsale.onsaleapi.domains.cities.db
+package com.onsale.onsaleapi.domains.likes.db
 
 import com.onsale.onsaleapi.domains.employees.db.EmployeesTable
 import com.onsale.onsaleapi.domains.offers.db.OffersTable

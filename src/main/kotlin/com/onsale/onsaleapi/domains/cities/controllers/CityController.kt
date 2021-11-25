@@ -1,6 +1,5 @@
 package com.onsale.onsaleapi.domains.cities.controllers
 
-import com.onsale.onsaleapi.domains.cities.controllers.LikeController.Companion.BASE_CITY_URL
 import com.onsale.onsaleapi.domains.cities.dto.*
 import com.onsale.onsaleapi.domains.cities.entities.City
 import com.onsale.onsaleapi.domains.cities.mappers.*
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 import java.net.URI
 
 @RestController
-@RequestMapping(value = [BASE_CITY_URL])
+@RequestMapping(value = [CityController.BASE_CITY_URL])
 class CityController(
         @Autowired val cityService: CityService,
         @Autowired val createCityResponseMapper: CreateCityResponseMapper,
@@ -20,9 +19,9 @@ class CityController(
         @Autowired val getCitiesResponseMapper: GetCitiesResponseMapper,
         @Autowired val deleteCityByIdResponseMapper: DeleteCityByIdResponseMapper,
         @Autowired val updateCityResponseMapper: UpdateCityResponseMapper
-) : ILikeController {
+) : ICityController {
     @PostMapping
-    override fun createCity(@RequestBody request: CreateLikeRequest): ResponseEntity<CreateCityResponse> {
+    override fun createCity(@RequestBody request: CreateCityRequest): ResponseEntity<CreateCityResponse> {
         val city = cityService.create(request)
 
         return ResponseEntity

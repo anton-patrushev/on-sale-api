@@ -1,6 +1,6 @@
 package com.onsale.onsaleapi.domains.cities.controllers
 
-import com.onsale.onsaleapi.domains.cities.controllers.CityController.Companion.BASE_CITY_URL
+import com.onsale.onsaleapi.domains.cities.controllers.LikeController.Companion.BASE_CITY_URL
 import com.onsale.onsaleapi.domains.cities.dto.*
 import com.onsale.onsaleapi.domains.cities.entities.City
 import com.onsale.onsaleapi.domains.cities.mappers.*
@@ -20,9 +20,9 @@ class CityController(
         @Autowired val getCitiesResponseMapper: GetCitiesResponseMapper,
         @Autowired val deleteCityByIdResponseMapper: DeleteCityByIdResponseMapper,
         @Autowired val updateCityResponseMapper: UpdateCityResponseMapper
-) : ICityController {
+) : ILikeController {
     @PostMapping
-    override fun createCity(@RequestBody request: CreateCityRequest): ResponseEntity<CreateCityResponse> {
+    override fun createCity(@RequestBody request: CreateLikeRequest): ResponseEntity<CreateCityResponse> {
         val city = cityService.create(request)
 
         return ResponseEntity

@@ -1,6 +1,6 @@
 package com.onsale.onsaleapi.domains.cities.repositories
 
-import com.onsale.onsaleapi.domains.cities.db.CitiesTable
+import com.onsale.onsaleapi.domains.cities.db.LikesTable
 import com.onsale.onsaleapi.domains.cities.entities.City
 import com.onsale.onsaleapi.domains.cities.entities.CityFields
 import com.onsale.onsaleapi.domains.cities.entities.fromDBRow
@@ -14,7 +14,7 @@ import java.util.UUID
 class CityRepository : ICityRepository {
     override fun create(city: City) {
         transaction {
-            CitiesTable.insert {
+            LikesTable.insert {
                 it[id] = UUID.fromString(city.id)
                 it[name] = city.name
             }
@@ -23,7 +23,7 @@ class CityRepository : ICityRepository {
 
     override fun getAll(): List<City> {
         val cities = transaction {
-            CitiesTable.selectAll().map { it }
+            LikesTable.selectAll().map { it }
         }
 
         return cities.map(City.Companion::fromDBRow)
@@ -31,7 +31,7 @@ class CityRepository : ICityRepository {
 
     override fun getById(id: ID): City? {
         val query = transaction {
-            CitiesTable.select { CitiesTable.id eq UUID.fromString(id) }.firstOrNull()
+            LikesTable.select { LikesTable.id eq UUID.fromString(id) }.firstOrNull()
         } ?: return null
 
         return query.let(City.Companion::fromDBRow)
@@ -39,7 +39,7 @@ class CityRepository : ICityRepository {
 
     override fun update(id: ID, fieldsToUpdate: CityFields) {
         transaction {
-            CitiesTable.update({ CitiesTable.id eq UUID.fromString(id) }) {
+            LikesTable.update({ LikesTable.id eq UUID.fromString(id) }) {
                 if (fieldsToUpdate.name != null) it[name] = fieldsToUpdate.name
             }
         }
@@ -47,13 +47,13 @@ class CityRepository : ICityRepository {
 
     override fun deleteAll() {
         transaction {
-            CitiesTable.deleteAll()
+            LikesTable.deleteAll()
         }
     }
 
     override fun deleteById(id: ID) {
         transaction {
-            CitiesTable.deleteWhere { CitiesTable.id eq UUID.fromString(id) }
+            LikesTable.deleteWhere { LikesTable.id eq UUID.fromString(id) }
         }
     }
 }

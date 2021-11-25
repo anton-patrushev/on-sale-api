@@ -1,12 +1,12 @@
 package com.onsale.onsaleapi.domains.cities.services
 
-import com.onsale.onsaleapi.domains.cities.dto.CreateCityRequest
+import com.onsale.onsaleapi.domains.cities.dto.CreateLikeRequest
 import com.onsale.onsaleapi.domains.cities.dto.UpdateCityRequest
 import com.onsale.onsaleapi.domains.cities.entities.City
 import com.onsale.onsaleapi.domains.shared.types.ID
 
 interface ICityService {
-    fun create(request: CreateCityRequest): City
+    fun create(request: CreateLikeRequest): City
     fun edit(id: ID, request: UpdateCityRequest): City?
 
     fun getById(id: ID): City?

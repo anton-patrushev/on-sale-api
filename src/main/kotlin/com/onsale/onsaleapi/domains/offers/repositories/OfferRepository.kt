@@ -1,6 +1,6 @@
 package com.onsale.onsaleapi.domains.offers.repositories
 
-import com.onsale.onsaleapi.domains.cities.db.CitiesTable
+import com.onsale.onsaleapi.domains.cities.db.LikesTable
 import com.onsale.onsaleapi.domains.companies.db.CompaniesTable
 import com.onsale.onsaleapi.domains.offers.db.OffersTable
 import com.onsale.onsaleapi.domains.offers.db.fromDBRow
@@ -49,7 +49,7 @@ class OfferRepository : IOfferRepository {
 
     override fun getByIdJoined(id: ID): OfferJoined? {
         val query = transaction {
-            OffersTable.leftJoin(CompaniesTable).leftJoin(CitiesTable)
+            OffersTable.leftJoin(CompaniesTable).leftJoin(LikesTable)
                 .select { OffersTable.id eq UUID.fromString(id) }.firstOrNull()
         } ?: return null
 
@@ -66,7 +66,7 @@ class OfferRepository : IOfferRepository {
 
     override fun getAllJoined(): List<OfferJoined> {
         val query = transaction {
-            OffersTable.leftJoin(CompaniesTable).leftJoin(CitiesTable).selectAll().map { it }
+            OffersTable.leftJoin(CompaniesTable).leftJoin(LikesTable).selectAll().map { it }
         }
 
         return query.map(OfferJoined.Companion::fromDBRow)

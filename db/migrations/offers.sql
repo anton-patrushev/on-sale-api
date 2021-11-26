@@ -8,6 +8,6 @@ CREATE TABLE Offers (
     created_at DATE NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (company_id) REFERENCES Companies(id),
-    FOREIGN KEY (city_id) REFERENCES Cities(id)
+    FOREIGN KEY (company_id) REFERENCES Companies(id) ON DELETE CASCADE,
+    FOREIGN KEY (city_id) REFERENCES Cities(id) ON DELETE CASCADE
 );

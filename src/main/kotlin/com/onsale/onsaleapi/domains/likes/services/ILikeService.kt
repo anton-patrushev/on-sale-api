@@ -8,4 +8,5 @@ import com.onsale.onsaleapi.domains.shared.types.ID
 interface ILikeService {
     fun getById(id: ID): Like?
     fun create(request: CreateLikeRequest): Like
+    fun getAll(): List<Like>
 }

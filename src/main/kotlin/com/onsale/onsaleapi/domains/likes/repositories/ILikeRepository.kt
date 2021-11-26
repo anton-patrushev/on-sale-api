@@ -7,4 +7,5 @@ import com.onsale.onsaleapi.domains.shared.types.ID
 interface ILikeRepository {
     fun getById(id: ID): Like?
     fun create(like: RawLike)
+    fun getAll(): List<Like>
 }

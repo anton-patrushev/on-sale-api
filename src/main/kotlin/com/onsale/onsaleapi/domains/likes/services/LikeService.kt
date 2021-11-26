@@ -20,6 +20,10 @@ class LikeService(
         return likeRepository.getById(id)
     }
 
+    override fun getAll(): List<Like> {
+        return likeRepository.getAll()
+    }
+
     override fun create(request: CreateLikeRequest): Like {
         val id = uuidService.getUUID()
         val rawLike = createLikeRequestMapper.transform(request, CreateLikeRequestMapperAdditionalParams(id))

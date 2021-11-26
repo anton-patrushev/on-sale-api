@@ -5,4 +5,6 @@ import com.onsale.onsaleapi.domains.shared.types.ID
 data class OfferCategory(
     val id: ID,
     val name: String
-)
+) {
+    companion object {}
+}

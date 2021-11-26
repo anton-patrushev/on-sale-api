@@ -3,7 +3,7 @@ package com.onsale.onsaleapi.domains.offers.entities
 import com.onsale.onsaleapi.domains.shared.types.ID
 import java.time.LocalDate
 
-data class Offer(
+data class _Offer(
         val id: ID,
         val companyId: ID,
         val description: String?,

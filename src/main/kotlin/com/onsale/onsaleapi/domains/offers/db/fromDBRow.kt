@@ -4,12 +4,12 @@ import com.onsale.onsaleapi.domains.cities.entities.City
 import com.onsale.onsaleapi.domains.cities.entities.fromDBRow
 import com.onsale.onsaleapi.domains.companies.entities.Company
 import com.onsale.onsaleapi.domains.companies.entities.fromDBRow
-import com.onsale.onsaleapi.domains.offers.entities.Offer
+import com.onsale.onsaleapi.domains.offers.entities._Offer
 import com.onsale.onsaleapi.domains.offers.entities.OfferJoined
 import org.jetbrains.exposed.sql.ResultRow
 
-fun Offer.Companion.fromDBRow(row: ResultRow): Offer {
-    return Offer(
+fun _Offer.Companion.fromDBRow(row: ResultRow): _Offer {
+    return _Offer(
             row[OffersTable.id].toString(),
             row[OffersTable.companyId].toString(),
             row[OffersTable.description],

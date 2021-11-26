@@ -4,15 +4,15 @@ import com.onsale.onsaleapi.domains.offers.dto.DeleteOfferResponse
 import com.onsale.onsaleapi.domains.offers.dto.DeleteOfferResponseData
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCityInfo
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCompanyInfo
-import com.onsale.onsaleapi.domains.offers.entities.Offer
+import com.onsale.onsaleapi.domains.offers.entities._Offer
 import com.onsale.onsaleapi.domains.offers.mappers.common.OfferResponseMapperAdditionalParams
 import com.onsale.onsaleapi.domains.shared.types.IMapperWithAdditionalParams
 import org.springframework.stereotype.Component
 
 @Component
 class DeleteOfferResponseMapper :
-    IMapperWithAdditionalParams<Offer, DeleteOfferResponse, OfferResponseMapperAdditionalParams> {
-    override fun transform(source: Offer, additionalParams: OfferResponseMapperAdditionalParams): DeleteOfferResponse {
+    IMapperWithAdditionalParams<_Offer, DeleteOfferResponse, OfferResponseMapperAdditionalParams> {
+    override fun transform(source: _Offer, additionalParams: OfferResponseMapperAdditionalParams): DeleteOfferResponse {
         return DeleteOfferResponse(
             DeleteOfferResponseData(
                 source.id,

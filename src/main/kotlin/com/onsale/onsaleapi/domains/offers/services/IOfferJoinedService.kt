@@ -2,7 +2,6 @@ package com.onsale.onsaleapi.domains.offers.services
 
 import com.onsale.onsaleapi.domains.offers.dto.CreateOfferRequest
 import com.onsale.onsaleapi.domains.offers.dto.UpdateOfferRequest
-import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.offers.entities.OfferJoined
 import com.onsale.onsaleapi.domains.shared.types.ID
 

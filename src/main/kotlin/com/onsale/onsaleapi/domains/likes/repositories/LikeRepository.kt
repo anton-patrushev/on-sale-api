@@ -54,16 +54,4 @@ class LikeRepository : ILikeRepository {
             LikesTable.deleteWhere { LikesTable.id eq UUID.fromString(id) }
         }
     }
-
-    override fun deleteAllByEmployeeId(employeeId: ID) {
-        transaction {
-            LikesTable.deleteWhere { LikesTable.employeeId eq UUID.fromString(employeeId) }
-        }
-    }
-
-    override fun deleteAllByOfferId(offerId: ID) {
-        transaction {
-            LikesTable.deleteWhere { LikesTable.offerId eq UUID.fromString(offerId) }
-        }
-    }
 }

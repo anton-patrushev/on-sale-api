@@ -1,6 +1,5 @@
 package com.onsale.onsaleapi.domains.offers.services
 
-import com.onsale.onsaleapi.domains.likes.repositories.ILikeRepository
 import com.onsale.onsaleapi.domains.offers.dto.CreateOfferRequest
 import com.onsale.onsaleapi.domains.offers.dto.UpdateOfferRequest
 import com.onsale.onsaleapi.domains.offers.entities.Offer
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service
 @Service
 class OfferService(
     @Autowired val offerRepository: IOfferRepository,
-    @Autowired val likeRepository: ILikeRepository,
     @Autowired val createOfferRequestMapper: CreateOfferRequestMapper,
     @Autowired val updateOfferRequestMapper: UpdateOfferRequestMapper,
 ) : IOfferService {
@@ -46,9 +44,7 @@ class OfferService(
         val offer = offerRepository.getById(id) ?: return null
 
         offerRepository.deleteById(offer.id)
-        likeRepository.deleteAllByOfferId(offer.id)
 
         return offer
     }
-
 }

@@ -7,7 +7,6 @@ import com.onsale.onsaleapi.domains.employees.mappers.CreateEmployeeRequestMappe
 import com.onsale.onsaleapi.domains.employees.mappers.CreateEmployeeRequestMapperAdditionalParams
 import com.onsale.onsaleapi.domains.employees.mappers.UpdateEmployeeRequestMapper
 import com.onsale.onsaleapi.domains.employees.reporitories.IEmployeeRepository
-import com.onsale.onsaleapi.domains.likes.repositories.ILikeRepository
 import com.onsale.onsaleapi.domains.shared.services.IUUIDService
 import com.onsale.onsaleapi.domains.shared.types.ID
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service
 @Service
 class EmployeeService(
         @Autowired private val employeeRepository: IEmployeeRepository,
-        @Autowired private val likeRepository: ILikeRepository,
         @Autowired private val createEmployeeRequestMapper: CreateEmployeeRequestMapper,
         @Autowired private val updateEmployeeRequestMapper: UpdateEmployeeRequestMapper,
         @Autowired private val uuidService: IUUIDService
@@ -45,7 +43,6 @@ class EmployeeService(
     override fun deleteById(id: ID): Employee? {
         val employee = employeeRepository.getById(id) ?: return null
 
-        likeRepository.deleteAllByEmployeeId(employee.id)
         employeeRepository.deleteById(employee.id)
 
         return employee

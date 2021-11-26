@@ -12,18 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class OfferJoinedService(
+class OfferService(
     @Autowired val offerRepository: IOfferRepository,
     @Autowired val likeRepository: ILikeRepository,
     @Autowired val createOfferRequestMapper: CreateOfferRequestMapper,
     @Autowired val updateOfferRequestMapper: UpdateOfferRequestMapper,
-) : IOfferJoinedService {
+) : IOfferService {
     override fun create(request: CreateOfferRequest): Offer {
         val offer = createOfferRequestMapper.transform(request)
 
         offerRepository.create(offer)
 
-        return offerRepository.getByIdJoined(offer.id) as Offer
+        return offerRepository.getById(offer.id) as Offer
     }
 
     override fun edit(id: ID, request: UpdateOfferRequest): Offer? {
@@ -31,19 +31,19 @@ class OfferJoinedService(
 
         offerRepository.update(id, offerFields)
 
-        return offerRepository.getByIdJoined(id)
+        return offerRepository.getById(id)
     }
 
     override fun getById(id: ID): Offer? {
-        return offerRepository.getByIdJoined(id)
+        return offerRepository.getById(id)
     }
 
     override fun getAll(): List<Offer> {
-        return offerRepository.getAllJoined()
+        return offerRepository.getAll()
     }
 
     override fun deleteById(id: ID): Offer? {
-        val offer = offerRepository.getByIdJoined(id) ?: return null
+        val offer = offerRepository.getById(id) ?: return null
 
         offerRepository.deleteById(offer.id)
         likeRepository.deleteAllByOfferId(offer.id)

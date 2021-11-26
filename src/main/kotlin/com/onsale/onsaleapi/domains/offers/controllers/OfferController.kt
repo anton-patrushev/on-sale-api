@@ -4,7 +4,7 @@ import com.onsale.onsaleapi.domains.offers.controllers.OfferController.Companion
 import com.onsale.onsaleapi.domains.offers.dto.*
 import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.offers.mappers.*
-import com.onsale.onsaleapi.domains.offers.services.OfferJoinedService
+import com.onsale.onsaleapi.domains.offers.services.OfferService
 import com.onsale.onsaleapi.domains.shared.types.ID
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -14,12 +14,12 @@ import java.net.URI
 @RestController
 @RequestMapping(value = [BASE_OFFER_URL])
 class OfferController(
-    @Autowired val offerJoinedService: OfferJoinedService,
-    @Autowired val getByIdOfferResponseMapper: GetByIdJoinedOfferResponseMapper,
-    @Autowired val getJoinedOffersResponseMapper: GetJoinedOffersResponseMapper,
-    @Autowired val createJoinedOfferResponseMapper: CreateJoinedOfferResponseMapper,
-    @Autowired val updateJoinedOfferResponseMapper: UpdateJoinedOfferResponseMapper,
-    @Autowired val deleteJoinedOfferResponseMapper: DeleteJoinedOfferResponseMapper,
+    @Autowired val offerJoinedService: OfferService,
+    @Autowired val getByIdOfferResponseMapper: GetOfferByIdResponseMapper,
+    @Autowired val getOffersResponseMapper: GetOffersResponseMapper,
+    @Autowired val createOfferResponseMapper: CreateOfferResponseMapper,
+    @Autowired val updateOfferResponseMapper: UpdateOfferResponseMapper,
+    @Autowired val deleteOfferResponseMapper: DeleteOfferResponseMapper,
 ) : IOfferController {
 
     companion object {
@@ -40,7 +40,7 @@ class OfferController(
         val joinedOffers = offerJoinedService.getAll()
 
         return ResponseEntity.ok(
-            getJoinedOffersResponseMapper.transform(joinedOffers)
+            getOffersResponseMapper.transform(joinedOffers)
         )
     }
 
@@ -49,7 +49,7 @@ class OfferController(
         val offer = offerJoinedService.create(request)
 
         return ResponseEntity.created(URI.create("${BASE_OFFER_URL}/${offer.id}"))
-            .body(createJoinedOfferResponseMapper.transform(offer))
+            .body(createOfferResponseMapper.transform(offer))
     }
 
     @PatchMapping("/{id}")
@@ -60,7 +60,7 @@ class OfferController(
         val offer = offerJoinedService.edit(id, request)
 
         return when (offer) {
-            is Offer -> ResponseEntity.ok(updateJoinedOfferResponseMapper.transform(offer))
+            is Offer -> ResponseEntity.ok(updateOfferResponseMapper.transform(offer))
             else -> ResponseEntity.notFound().build()
         }
     }
@@ -70,7 +70,7 @@ class OfferController(
         val offer = offerJoinedService.deleteById(id)
 
         return when (offer) {
-            is Offer -> ResponseEntity.ok(deleteJoinedOfferResponseMapper.transform(offer))
+            is Offer -> ResponseEntity.ok(deleteOfferResponseMapper.transform(offer))
             else -> ResponseEntity.notFound().build()
         }
     }

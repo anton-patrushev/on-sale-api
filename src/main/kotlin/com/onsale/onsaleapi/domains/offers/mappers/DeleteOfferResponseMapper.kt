@@ -4,29 +4,28 @@ import com.onsale.onsaleapi.domains.offers.dto.DeleteOfferResponse
 import com.onsale.onsaleapi.domains.offers.dto.DeleteOfferResponseData
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCityInfo
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCompanyInfo
-import com.onsale.onsaleapi.domains.offers.entities._Offer
-import com.onsale.onsaleapi.domains.offers.mappers.common.OfferResponseMapperAdditionalParams
-import com.onsale.onsaleapi.domains.shared.types.IMapperWithAdditionalParams
+import com.onsale.onsaleapi.domains.offers.entities.Offer
+import com.onsale.onsaleapi.domains.shared.types.IMapper
 import org.springframework.stereotype.Component
 
 @Component
 class DeleteOfferResponseMapper :
-    IMapperWithAdditionalParams<_Offer, DeleteOfferResponse, OfferResponseMapperAdditionalParams> {
-    override fun transform(source: _Offer, additionalParams: OfferResponseMapperAdditionalParams): DeleteOfferResponse {
+    IMapper<Offer, DeleteOfferResponse> {
+    override fun transform(source: Offer): DeleteOfferResponse {
         return DeleteOfferResponse(
             DeleteOfferResponseData(
                 source.id,
                 CommonCompanyInfo(
-                    additionalParams.company.id,
-                    additionalParams.company.name,
-                    additionalParams.company.websiteURL,
-                    additionalParams.company.email,
-                    additionalParams.company.phone,
-                    additionalParams.company.workSchedule
+                    source.company.id,
+                    source.company.name,
+                    source.company.websiteURL,
+                    source.company.email,
+                    source.company.phone,
+                    source.company.workSchedule
                 ),
                 source.description,
                 source.sale,
-                CommonCityInfo(additionalParams.city.id, additionalParams.city.name),
+                CommonCityInfo(source.city.id, source.city.name),
                 source.createdAt.toString()
             )
         )

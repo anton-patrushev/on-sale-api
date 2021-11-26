@@ -4,7 +4,7 @@ import com.onsale.onsaleapi.domains.cities.db.CitiesTable
 import com.onsale.onsaleapi.domains.companies.db.CompaniesTable
 import com.onsale.onsaleapi.domains.offers.db.OffersTable
 import com.onsale.onsaleapi.domains.offers.db.fromDBRow
-import com.onsale.onsaleapi.domains.offers.entities._Offer
+import com.onsale.onsaleapi.domains.offers.entities.RawOffer
 import com.onsale.onsaleapi.domains.offers.entities.OfferFields
 import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.shared.types.ID
@@ -15,7 +15,7 @@ import java.util.*
 
 @Repository
 class OfferRepository : IOfferRepository {
-    override fun create(offer: _Offer) {
+    override fun create(offer: RawOffer) {
         transaction {
             OffersTable.insert {
                 it[id] = UUID.fromString(offer.id)
@@ -39,15 +39,7 @@ class OfferRepository : IOfferRepository {
         }
     }
 
-    override fun getById(id: ID): _Offer? {
-        val query = transaction {
-            OffersTable.select { OffersTable.id eq UUID.fromString(id) }.firstOrNull()
-        } ?: return null
-
-        return query.let(_Offer.Companion::fromDBRow)
-    }
-
-    override fun getByIdJoined(id: ID): Offer? {
+    override fun getById(id: ID): Offer? {
         val query = transaction {
             OffersTable.leftJoin(CompaniesTable).leftJoin(CitiesTable)
                 .select { OffersTable.id eq UUID.fromString(id) }.firstOrNull()
@@ -56,15 +48,7 @@ class OfferRepository : IOfferRepository {
         return query.let(Offer.Companion::fromDBRow)
     }
 
-    override fun getAll(): List<_Offer> {
-        val query = transaction {
-            OffersTable.selectAll()
-        }
-
-        return query.map(_Offer.Companion::fromDBRow)
-    }
-
-    override fun getAllJoined(): List<Offer> {
+    override fun getAll(): List<Offer> {
         val query = transaction {
             OffersTable.leftJoin(CompaniesTable).leftJoin(CitiesTable).selectAll().map { it }
         }

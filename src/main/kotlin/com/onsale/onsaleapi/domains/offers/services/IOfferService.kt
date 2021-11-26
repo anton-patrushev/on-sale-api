@@ -5,7 +5,7 @@ import com.onsale.onsaleapi.domains.offers.dto.UpdateOfferRequest
 import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.shared.types.ID
 
-interface IOfferJoinedService {
+interface IOfferService {
     fun create(request: CreateOfferRequest): Offer
 
     fun edit(id: ID, request: UpdateOfferRequest): Offer?

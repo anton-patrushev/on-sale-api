@@ -24,6 +24,14 @@ class LikeService(
         return likeRepository.getAll()
     }
 
+    override fun delete(id: ID): Like {
+        val like = likeRepository.getById(id)
+
+        likeRepository.delete(id)
+
+        return like as Like
+    }
+
     override fun create(request: CreateLikeRequest): Like {
         val id = uuidService.getUUID()
         val rawLike = createLikeRequestMapper.transform(request, CreateLikeRequestMapperAdditionalParams(id))

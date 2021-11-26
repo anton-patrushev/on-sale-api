@@ -1,8 +1,8 @@
 package com.onsale.onsaleapi.domains.offers.services
 
+import com.onsale.onsaleapi.domains.likes.repositories.ILikeRepository
 import com.onsale.onsaleapi.domains.offers.dto.CreateOfferRequest
 import com.onsale.onsaleapi.domains.offers.dto.UpdateOfferRequest
-import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.offers.entities.OfferJoined
 import com.onsale.onsaleapi.domains.offers.mappers.CreateOfferRequestMapper
 import com.onsale.onsaleapi.domains.offers.mappers.UpdateOfferRequestMapper
@@ -13,16 +13,17 @@ import org.springframework.stereotype.Service
 
 @Service
 class OfferJoinedService(
-        @Autowired val offerRepository: IOfferRepository,
-        @Autowired val createOfferRequestMapper: CreateOfferRequestMapper,
-        @Autowired val updateOfferRequestMapper: UpdateOfferRequestMapper,
+    @Autowired val offerRepository: IOfferRepository,
+    @Autowired val likeRepository: ILikeRepository,
+    @Autowired val createOfferRequestMapper: CreateOfferRequestMapper,
+    @Autowired val updateOfferRequestMapper: UpdateOfferRequestMapper,
 ) : IOfferJoinedService {
     override fun create(request: CreateOfferRequest): OfferJoined {
         val offer = createOfferRequestMapper.transform(request)
 
         offerRepository.create(offer)
 
-        return offerRepository.getById(offer.id) as OfferJoined
+        return offerRepository.getByIdJoined(offer.id) as OfferJoined
     }
 
     override fun edit(id: ID, request: UpdateOfferRequest): OfferJoined? {
@@ -42,9 +43,12 @@ class OfferJoinedService(
     }
 
     override fun deleteById(id: ID): OfferJoined? {
-        offerRepository.deleteById(id)
+        val offer = offerRepository.getByIdJoined(id) ?: return null
 
-        return offerRepository.getByIdJoined(id)
+        offerRepository.deleteById(offer.id)
+        likeRepository.deleteAllByOfferId(offer.id)
+
+        return offer
     }
 
 }

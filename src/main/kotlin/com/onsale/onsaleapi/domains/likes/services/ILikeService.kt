@@ -9,4 +9,5 @@ interface ILikeService {
     fun getById(id: ID): Like?
     fun create(request: CreateLikeRequest): Like
     fun getAll(): List<Like>
+    fun delete(id: ID): Like
 }

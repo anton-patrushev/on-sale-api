@@ -1,10 +1,8 @@
 package com.onsale.onsaleapi.domains.likes.controllers
 
-import com.onsale.onsaleapi.domains.likes.dto.CreateLikeRequest
-import com.onsale.onsaleapi.domains.likes.dto.CreateLikeResponse
-import com.onsale.onsaleapi.domains.likes.dto.GetLikeByIdResponse
-import com.onsale.onsaleapi.domains.likes.dto.GetLikesResponse
+import com.onsale.onsaleapi.domains.likes.dto.*
 import com.onsale.onsaleapi.domains.likes.mappers.CreateLikeResponseMapper
+import com.onsale.onsaleapi.domains.likes.mappers.DeleteLikeResponseMapper
 import com.onsale.onsaleapi.domains.likes.mappers.GetLikeByIdResponseMapper
 import com.onsale.onsaleapi.domains.likes.mappers.GetLikesResponseMapper
 import com.onsale.onsaleapi.domains.likes.services.ILikeService
@@ -20,7 +18,8 @@ class LikeController(
     @Autowired val likeService: ILikeService,
     @Autowired val createLikeResponseMapper: CreateLikeResponseMapper,
     @Autowired val getLikeByIdResponseMapper: GetLikeByIdResponseMapper,
-    @Autowired val getLikesResponseMapper: GetLikesResponseMapper
+    @Autowired val getLikesResponseMapper: GetLikesResponseMapper,
+    @Autowired val deleteLikeResponseMapper: DeleteLikeResponseMapper
 ) : ILikeController {
     @PostMapping
     override fun createLike(request: CreateLikeRequest): ResponseEntity<CreateLikeResponse> {
@@ -43,6 +42,13 @@ class LikeController(
         val likes = likeService.getAll()
 
         return ResponseEntity.ok(getLikesResponseMapper.transform(likes))
+    }
+
+    @DeleteMapping("/{id}")
+    override fun deleteLike(@PathVariable id: ID): ResponseEntity<DeleteLikeResponse> {
+        val like = likeService.delete(id)
+
+        return ResponseEntity.ok(deleteLikeResponseMapper.transform(like))
     }
 
     companion object {

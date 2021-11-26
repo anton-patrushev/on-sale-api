@@ -9,10 +9,7 @@ import com.onsale.onsaleapi.domains.likes.entities.Like
 import com.onsale.onsaleapi.domains.likes.entities.RawLike
 import com.onsale.onsaleapi.domains.offers.db.OffersTable
 import com.onsale.onsaleapi.domains.shared.types.ID
-import org.jetbrains.exposed.sql.ColumnSet
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -50,5 +47,23 @@ class LikeRepository : ILikeRepository {
         }
 
         return likesQuery.map(Like.Companion::fromDBRow)
+    }
+
+    override fun delete(id: ID) {
+        transaction {
+            LikesTable.deleteWhere { LikesTable.id eq UUID.fromString(id) }
+        }
+    }
+
+    override fun deleteAllByEmployeeId(employeeId: ID) {
+        transaction {
+            LikesTable.deleteWhere { LikesTable.employeeId eq UUID.fromString(employeeId) }
+        }
+    }
+
+    override fun deleteAllByOfferId(offerId: ID) {
+        transaction {
+            LikesTable.deleteWhere { LikesTable.offerId eq UUID.fromString(offerId) }
+        }
     }
 }

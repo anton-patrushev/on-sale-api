@@ -4,14 +4,14 @@ import com.onsale.onsaleapi.domains.offers.dto.GetByIdOfferResponse
 import com.onsale.onsaleapi.domains.offers.dto.GetByIdOfferResponseData
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCityInfo
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCompanyInfo
-import com.onsale.onsaleapi.domains.offers.entities.OfferJoined
+import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.shared.types.IMapper
 import org.springframework.stereotype.Component
 
 @Component
 class GetByIdJoinedOfferResponseMapper :
-    IMapper<OfferJoined, GetByIdOfferResponse> {
-    override fun transform(source: OfferJoined): GetByIdOfferResponse {
+    IMapper<Offer, GetByIdOfferResponse> {
+    override fun transform(source: Offer): GetByIdOfferResponse {
         return GetByIdOfferResponse(
             GetByIdOfferResponseData(
                 source.id,

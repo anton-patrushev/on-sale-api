@@ -4,14 +4,14 @@ import com.onsale.onsaleapi.domains.offers.dto.UpdateOfferResponse
 import com.onsale.onsaleapi.domains.offers.dto.UpdateOfferResponseData
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCityInfo
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCompanyInfo
-import com.onsale.onsaleapi.domains.offers.entities.OfferJoined
+import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.shared.types.IMapper
 import org.springframework.stereotype.Component
 
 @Component
 class UpdateJoinedOfferResponseMapper :
-    IMapper<OfferJoined, UpdateOfferResponse> {
-    override fun transform(source: OfferJoined): UpdateOfferResponse {
+    IMapper<Offer, UpdateOfferResponse> {
+    override fun transform(source: Offer): UpdateOfferResponse {
         return UpdateOfferResponse(
             UpdateOfferResponseData(
                 source.id,

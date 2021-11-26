@@ -6,7 +6,7 @@ import com.onsale.onsaleapi.domains.offers.db.OffersTable
 import com.onsale.onsaleapi.domains.offers.db.fromDBRow
 import com.onsale.onsaleapi.domains.offers.entities._Offer
 import com.onsale.onsaleapi.domains.offers.entities.OfferFields
-import com.onsale.onsaleapi.domains.offers.entities.OfferJoined
+import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.shared.types.ID
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -47,13 +47,13 @@ class OfferRepository : IOfferRepository {
         return query.let(_Offer.Companion::fromDBRow)
     }
 
-    override fun getByIdJoined(id: ID): OfferJoined? {
+    override fun getByIdJoined(id: ID): Offer? {
         val query = transaction {
             OffersTable.leftJoin(CompaniesTable).leftJoin(CitiesTable)
                 .select { OffersTable.id eq UUID.fromString(id) }.firstOrNull()
         } ?: return null
 
-        return query.let(OfferJoined.Companion::fromDBRow)
+        return query.let(Offer.Companion::fromDBRow)
     }
 
     override fun getAll(): List<_Offer> {
@@ -64,12 +64,12 @@ class OfferRepository : IOfferRepository {
         return query.map(_Offer.Companion::fromDBRow)
     }
 
-    override fun getAllJoined(): List<OfferJoined> {
+    override fun getAllJoined(): List<Offer> {
         val query = transaction {
             OffersTable.leftJoin(CompaniesTable).leftJoin(CitiesTable).selectAll().map { it }
         }
 
-        return query.map(OfferJoined.Companion::fromDBRow)
+        return query.map(Offer.Companion::fromDBRow)
     }
 
     override fun deleteAll() {

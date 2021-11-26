@@ -2,7 +2,7 @@ package com.onsale.onsaleapi.domains.offers.controllers
 
 import com.onsale.onsaleapi.domains.offers.controllers.OfferController.Companion.BASE_OFFER_URL
 import com.onsale.onsaleapi.domains.offers.dto.*
-import com.onsale.onsaleapi.domains.offers.entities.OfferJoined
+import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.offers.mappers.*
 import com.onsale.onsaleapi.domains.offers.services.OfferJoinedService
 import com.onsale.onsaleapi.domains.shared.types.ID
@@ -60,7 +60,7 @@ class OfferController(
         val offer = offerJoinedService.edit(id, request)
 
         return when (offer) {
-            is OfferJoined -> ResponseEntity.ok(updateJoinedOfferResponseMapper.transform(offer))
+            is Offer -> ResponseEntity.ok(updateJoinedOfferResponseMapper.transform(offer))
             else -> ResponseEntity.notFound().build()
         }
     }
@@ -70,7 +70,7 @@ class OfferController(
         val offer = offerJoinedService.deleteById(id)
 
         return when (offer) {
-            is OfferJoined -> ResponseEntity.ok(deleteJoinedOfferResponseMapper.transform(offer))
+            is Offer -> ResponseEntity.ok(deleteJoinedOfferResponseMapper.transform(offer))
             else -> ResponseEntity.notFound().build()
         }
     }

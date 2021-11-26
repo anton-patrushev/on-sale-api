@@ -5,7 +5,7 @@ import com.onsale.onsaleapi.domains.companies.entities.Company
 import com.onsale.onsaleapi.domains.shared.types.ID
 import java.time.LocalDate
 
-data class OfferJoined (
+data class Offer (
     val id: ID,
     val company: Company,
     val description: String?,

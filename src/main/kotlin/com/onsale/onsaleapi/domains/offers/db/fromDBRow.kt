@@ -5,7 +5,7 @@ import com.onsale.onsaleapi.domains.cities.entities.fromDBRow
 import com.onsale.onsaleapi.domains.companies.entities.Company
 import com.onsale.onsaleapi.domains.companies.entities.fromDBRow
 import com.onsale.onsaleapi.domains.offers.entities._Offer
-import com.onsale.onsaleapi.domains.offers.entities.OfferJoined
+import com.onsale.onsaleapi.domains.offers.entities.Offer
 import org.jetbrains.exposed.sql.ResultRow
 
 fun _Offer.Companion.fromDBRow(row: ResultRow): _Offer {
@@ -19,8 +19,8 @@ fun _Offer.Companion.fromDBRow(row: ResultRow): _Offer {
     )
 }
 
-fun OfferJoined.Companion.fromDBRow(row: ResultRow): OfferJoined {
-    return OfferJoined(
+fun Offer.Companion.fromDBRow(row: ResultRow): Offer {
+    return Offer(
         row[OffersTable.id].toString(),
         Company.fromDBRow(row),
         row[OffersTable.description],

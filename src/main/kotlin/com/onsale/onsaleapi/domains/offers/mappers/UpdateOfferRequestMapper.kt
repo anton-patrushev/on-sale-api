@@ -18,7 +18,8 @@ class UpdateOfferRequestMapper : IMapper<UpdateOfferRequest, OfferFields> {
             source.description,
             source.sale,
             source.city_id,
-            createdAt
+            createdAt,
+            source.categories
         )
     }
 }

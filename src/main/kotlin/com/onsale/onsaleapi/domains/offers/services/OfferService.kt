@@ -29,6 +29,8 @@ class OfferService(
 
         offerRepository.update(id, offerFields)
 
+        // TODO: update Offers_Categories table to apply `categories` field
+
         return offerRepository.getById(id)
     }
 

@@ -27,5 +27,6 @@ fun Offer.Companion.fromDBRow(row: ResultRow): Offer {
         row[OffersTable.sale],
         City.fromDBRow(row),
         row[OffersTable.createdAt],
+        categories = listOf() // TODO: replace with joined values
     )
 }

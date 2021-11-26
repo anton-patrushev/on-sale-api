@@ -2,7 +2,7 @@ package com.onsale.onsaleapi.domains.offers.dto
 
 import com.onsale.onsaleapi.domains.shared.types.ID
 
-data class CreateOfferRequest (
+data class CreateOfferRequest(
     val id: ID,
     val company_id: ID,
     val description: String?,

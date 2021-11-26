@@ -1,21 +1,25 @@
 package com.onsale.onsaleapi.domains.offers.mappers
 
+import com.onsale.onsaleapi.domains.categories.mappers.GetCategoryByIdResponseMapper
 import com.onsale.onsaleapi.domains.offers.dto.DeleteOfferResponse
 import com.onsale.onsaleapi.domains.offers.dto.DeleteOfferResponseData
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCityInfo
 import com.onsale.onsaleapi.domains.offers.dto.common.CommonCompanyInfo
 import com.onsale.onsaleapi.domains.offers.entities.Offer
 import com.onsale.onsaleapi.domains.shared.types.IMapper
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class DeleteOfferResponseMapper :
+class DeleteOfferResponseMapper(
+    @Autowired val getCategoryByIdResponseMapper: GetCategoryByIdResponseMapper
+) :
     IMapper<Offer, DeleteOfferResponse> {
     override fun transform(source: Offer): DeleteOfferResponse {
         return DeleteOfferResponse(
             DeleteOfferResponseData(
                 source.id,
-                CommonCompanyInfo(
+                company = CommonCompanyInfo(
                     source.company.id,
                     source.company.name,
                     source.company.websiteURL,
@@ -25,8 +29,9 @@ class DeleteOfferResponseMapper :
                 ),
                 source.description,
                 source.sale,
-                CommonCityInfo(source.city.id, source.city.name),
-                source.createdAt.toString()
+                city = CommonCityInfo(source.city.id, source.city.name),
+                source.createdAt.toString(),
+                categories = source.categories?.map { getCategoryByIdResponseMapper.transform(it).data }
             )
         )
     }

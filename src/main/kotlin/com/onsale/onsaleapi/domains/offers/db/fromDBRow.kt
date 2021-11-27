@@ -22,11 +22,11 @@ fun RawOffer.Companion.fromDBRow(row: ResultRow): RawOffer {
 fun Offer.Companion.fromDBRow(row: ResultRow): Offer {
     return Offer(
         row[OffersTable.id].toString(),
-        Company.fromDBRow(row),
+        company = Company.fromDBRow(row),
         row[OffersTable.description],
         row[OffersTable.sale],
-        City.fromDBRow(row),
+        city = City.fromDBRow(row),
         row[OffersTable.createdAt],
-        categories = listOf() // TODO: replace with joined values
+        categories = null // TODO: replace with joined values
     )
 }

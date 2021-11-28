@@ -1,5 +1,9 @@
 package com.onsale.onsaleapi.domains.offers.repositories
 
+import com.onsale.onsaleapi.domains.categories.db.CategoriesTable
+import com.onsale.onsaleapi.domains.categories.db.OffersCategoriesTable
+import com.onsale.onsaleapi.domains.categories.db.fromDBRow
+import com.onsale.onsaleapi.domains.categories.entities.OfferCategory
 import com.onsale.onsaleapi.domains.cities.db.CitiesTable
 import com.onsale.onsaleapi.domains.companies.db.CompaniesTable
 import com.onsale.onsaleapi.domains.offers.db.OffersTable
@@ -41,19 +45,39 @@ class OfferRepository : IOfferRepository {
 
     override fun getById(id: ID): Offer? {
         val query = transaction {
-            OffersTable.leftJoin(CompaniesTable).leftJoin(CitiesTable)
-                .select { OffersTable.id eq UUID.fromString(id) }.firstOrNull()
-        } ?: return null
+            OffersCategoriesTable
+                .rightJoin(OffersTable)
+                .leftJoin(CategoriesTable)
+                .leftJoin(CompaniesTable)
+                .leftJoin(CitiesTable)
+                .select { OffersTable.id eq UUID.fromString(id) }.map { it }
+        }
 
-        return query.let(Offer.Companion::fromDBRow)
+        if (query.isEmpty()) return null
+
+        return query[0].let { Offer.fromDBRow(it, query) }
     }
 
     override fun getAll(): List<Offer> {
         val query = transaction {
-            OffersTable.leftJoin(CompaniesTable).leftJoin(CitiesTable).selectAll().map { it }
+            OffersCategoriesTable
+                .rightJoin(OffersTable)
+                .leftJoin(CategoriesTable)
+                .leftJoin(CompaniesTable)
+                .leftJoin(CitiesTable)
+                .selectAll().map { it }
         }
 
-        return query.map(Offer.Companion::fromDBRow)
+
+
+        return query.map {
+            val offerRow = it
+            val categories = query.filter {
+                offerRow[OffersCategoriesTable.offerId] == it[OffersCategoriesTable.offerId]
+            }
+
+            Offer.fromDBRow(it, categories)
+        }.distinctBy { it.id }
     }
 
     override fun deleteAll() {

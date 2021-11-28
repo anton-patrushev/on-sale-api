@@ -41,3 +41,26 @@ FROM
 WHERE offers_categories.offer_id = 'a2eebc99-9c0b-4ef8-bb6d-6bb9bd380a14'
 GROUP BY categories.name, companies.name, offers.description
 ;
+
+-- select all offers with categories
+SELECT companies.name, offers.description, categories.name FROM
+    offers_categories
+    RIGHT JOIN offers on offers.id = offers_categories.offer_id
+    LEFT JOIN companies on companies.id = offers.company_id
+    LEFT JOIN categories on categories.id = offers_categories.category_id;
+
+-- select Nike offer with categories
+SELECT companies.name, offers.description, categories.name FROM
+    offers_categories
+    RIGHT JOIN offers on offers.id = offers_categories.offer_id
+    LEFT JOIN companies on companies.id = offers.company_id
+    LEFT JOIN categories on categories.id = offers_categories.category_id
+WHERE offers.id = 'a2eebc99-9c0b-4ef8-bb6d-6bb9bd380a12';
+
+-- select Youtube offer with categories
+SELECT companies.name, offers.description, categories.name FROM
+    offers_categories
+    RIGHT JOIN offers on offers.id = offers_categories.offer_id
+    LEFT JOIN companies on companies.id = offers.company_id
+    LEFT JOIN categories on categories.id = offers_categories.category_id
+WHERE offers.id = '6ae4d544-7a1f-4fba-a7e0-8427de3e1289';

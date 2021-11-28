@@ -14,7 +14,7 @@ import java.net.URI
 @RestController
 @RequestMapping(value = [BASE_OFFER_URL])
 class OfferController(
-    @Autowired val offerJoinedService: OfferService,
+    @Autowired val offerService: OfferService,
     @Autowired val getByIdOfferResponseMapper: GetOfferByIdResponseMapper,
     @Autowired val getOffersResponseMapper: GetOffersResponseMapper,
     @Autowired val createOfferResponseMapper: CreateOfferResponseMapper,
@@ -28,7 +28,7 @@ class OfferController(
 
     @GetMapping("/{id}")
     override fun getOfferById(@PathVariable id: ID): ResponseEntity<GetByIdOfferResponse> {
-        val offer = offerJoinedService.getById(id) ?: return ResponseEntity.notFound().build()
+        val offer = offerService.getById(id) ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(
             getByIdOfferResponseMapper.transform(offer)
@@ -37,7 +37,7 @@ class OfferController(
 
     @GetMapping
     override fun getOffers(): ResponseEntity<GetOffersResponse> {
-        val joinedOffers = offerJoinedService.getAll()
+        val joinedOffers = offerService.getAll()
 
         return ResponseEntity.ok(
             getOffersResponseMapper.transform(joinedOffers)
@@ -46,7 +46,7 @@ class OfferController(
 
     @PostMapping
     override fun createOffer(@RequestBody request: CreateOfferRequest): ResponseEntity<CreateOfferResponse> {
-        val offer = offerJoinedService.create(request)
+        val offer = offerService.create(request)
 
         return ResponseEntity.created(URI.create("${BASE_OFFER_URL}/${offer.id}"))
             .body(createOfferResponseMapper.transform(offer))
@@ -57,7 +57,7 @@ class OfferController(
         @PathVariable id: ID,
         @RequestBody request: UpdateOfferRequest
     ): ResponseEntity<UpdateOfferResponse> {
-        val offer = offerJoinedService.edit(id, request)
+        val offer = offerService.edit(id, request)
 
         return when (offer) {
             is Offer -> ResponseEntity.ok(updateOfferResponseMapper.transform(offer))
@@ -67,7 +67,7 @@ class OfferController(
 
     @DeleteMapping("/{id}")
     override fun deleteOffer(@PathVariable id: ID): ResponseEntity<DeleteOfferResponse> {
-        val offer = offerJoinedService.deleteById(id)
+        val offer = offerService.deleteById(id)
 
         return when (offer) {
             is Offer -> ResponseEntity.ok(deleteOfferResponseMapper.transform(offer))

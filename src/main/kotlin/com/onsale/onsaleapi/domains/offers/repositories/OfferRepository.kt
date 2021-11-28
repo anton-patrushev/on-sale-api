@@ -70,6 +70,7 @@ class OfferRepository : IOfferRepository {
 
 
 
+        // TODO: refactor and move into better place
         return query.map {
             val offerRow = it
             val categories = query.filter {

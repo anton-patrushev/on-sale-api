@@ -23,6 +23,7 @@ fun RawOffer.Companion.fromDBRow(row: ResultRow): RawOffer {
 }
 
 fun Offer.Companion.fromDBRow(row: ResultRow, query: List<ResultRow>? = null): Offer {
+    // TODO: refactor and move into better place
     val categories = query
         ?.filter { it[CategoriesTable.id] != null }
         ?.map(OfferCategory.Companion::fromDBRow)
